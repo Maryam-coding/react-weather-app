@@ -1,71 +1,54 @@
 import React, { useState } from "react";
-import WeatherInfo from "./WeatherInfo";
-import WeatherForecast from "./WeatherForecast";
-import axios from "axios";
-import "./Weather.css";
 
-export default function Weather(props) {
-  const [weatherData, setWeatherData] = useState({ ready: false });
-  const [city, setCity] = useState(props.defaultCity);
+export default function WeatherTemperature(props) {
+  const [unit, setUnit] = useState("celsius");
 
-  function handleResponse(response) {
-    setWeatherData({
-      ready: true,
-      coordinates: response.data.coord,
-      temperature: response.data.main.temp,
-      humidity: response.data.main.humidity,
-      date: new Date(response.data.dt * 1000),
-      description: response.data.weather[0].description,
-      icon: response.data.weather[0].icon,
-      wind: response.data.wind.speed,
-      city: response.data.name,
-    });
-  }
-
-  function handleSubmit(event) {
+  function showFahrenheit(event) {
     event.preventDefault();
-    search();
+    setUnit("fahrenheit");
   }
 
-  function handleCityChange(event) {
-    setCity(event.target.value);
+  function showCelsius(event) {
+    event.preventDefault();
+    setUnit("celsius");
   }
 
-  function search() {
-    const apiKey = "8c78e9e7e9928cd1a2a6f923072c3dec";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-    axios.get(apiUrl).then(handleResponse);
-  }
-
-  if (weatherData.ready) {
+  if (unit === "celsius") {
     return (
-      <div className="Weather">
-        <form onSubmit={handleSubmit}>
-          <div className="row">
-            <div className="col-9">
-              <input
-                type="search"
-                placeholder="Enter a city.."
-                className="form-control"
-                autoFocus="on"
-                onChange={handleCityChange}
-              />
-            </div>
-            <div className="col-3">
-              <input
-                type="submit"
-                value="Search"
-                className="btn btn-primary w-100"
-              />
-            </div>
-          </div>
-        </form>
-        <WeatherInfo data={weatherData} />
-        <WeatherForecast coordinates={weatherData.coordinates} />
-      </div>
+      <span className="weathertemp ms-2">
+        <span id="celsius">{Math.round(props.celsius)}</span>
+        <span className="degree">
+          <a
+            href="`"
+            id="celcius-link"
+            className="active"
+            onClick={showFahrenheit}
+          >
+            ⁰C{" "}
+          </a>
+        </span>{" "}
+      </span>
     );
   } else {
-    search();
-    return "Loading...";
+    let fahrenheit = (props.celsius * 9) / 5 + 32;
+    return (
+      <span className="weathertemp">
+        <span id="celsius">{Math.round(fahrenheit)}</span>
+        <span className="degree">
+          <a
+            href="/"
+            id="celcius-link"
+            className="active"
+            onClick={showCelsius}
+          >
+            ⁰C |{" "}
+          </a>
+          <a href="/" id="fahren-link">
+            {" "}
+            ⁰F
+          </a>
+        </span>{" "}
+      </span>
+    );
   }
 }
