@@ -1,19 +1,32 @@
+import React from "react";
+import Weather from "./Weather";
+import "./App.css";
 
-import './App.css';
-
-function App() {
+export default function App() {
   return (
     <div className="App">
       <div className="container">
-        <h1>Weather App</h1>
+        <Weather defaultCity="San Jose" />
 
         <footer>
-          <small>This was open-source code by Maryam Noor Hussain on Github <a href="https://www.github.com/Maryam-coding" target="_blank">
-            </a> </small>
-          </footer>
-     </div>
+          This project was coded by Maryam Noor Hussain and is{" "}
+          <a
+            href="https://github.com/Maryam-coding/react-weather-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            open-sourced on GitHub
+          </a>{" "}
+          and{" "}
+          <a
+            href="https://suspicious-beaver-111c4d.netlify.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            hosted on Netlify
+          </a>
+        </footer>
+      </div>
     </div>
   );
 }
-
-export default App;
