@@ -43,7 +43,7 @@ export default function WeatherTemperature(props) {
           >
             ⁰C |{" "}
           </a>
-          <a href="/" id="fahren-link">
+          <a href="/" id="faren-link">
             {" "}
             ⁰F
           </a>
